@@ -1,8 +1,10 @@
 package model
 
 import (
+    "bitbucket.org/aisgteam/ai-struct"
     "fmt"
     "net/url"
+    "regexp"
     "strings"
     "time"
 )
@@ -33,7 +35,27 @@ type ModDownload struct {
 }
 
 type ModRelease struct {
+    DownloadURL     string
+    FileName        string
+    Info            ReleaseInfo
+}
 
+type ReleaseInfo struct {
+    Dependencies    Dependencies
+    FactorioVersion aistruct.Version
+}
+
+type Dependencies []Dependent
+
+type Dependent struct {
+    Name            string
+    Required        bool
+    Version         aistruct.Version
+    Condition       aistruct.Condition
+}
+
+func (d *Dependent) Parse(s string) {
+    re := regexp.MustCompile(`(\?)?\s?(.*?)\s(\>\=|\<\=|\=)\s(\d+\.\d+\.\d+)`)
 }
 
 type ModTime struct {
